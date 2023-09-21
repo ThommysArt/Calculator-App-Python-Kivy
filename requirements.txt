@@ -1,0 +1,6 @@
+kivy
+kivymd
+requests
+sympy
+darkdetect
+buildozer

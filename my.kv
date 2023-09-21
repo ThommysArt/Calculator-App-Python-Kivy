@@ -1,0 +1,1113 @@
+
+####################################################################################################################
+# Main Window
+<StandardScreen>:
+    name: "standard"
+
+    # Application top bar
+    MDTopAppBar:
+        id: topbar
+        title: "Standard"
+        left_action_items: [["menu", lambda x: app.menu.open()]]
+        right_action_items: [["theme-light-dark", lambda x: app.change_theme()]]
+        pos_hint: {"center_y": 0.95}
+
+
+    # The Text field for inputting values to calculate
+    MDTextField:
+        id: text_bar
+        hint_text: "Enter your problem"
+        helper_text: "Feel free!"
+        pos_hint: {"center_y": 0.85}
+        mode: "fill"
+
+
+
+    # The buttons are arranged in rows of 4.
+
+    # Row 1
+    MDRaisedButton:
+        id: percent
+        text: "%"
+        pos_hint: {"center_x": .1, "center_y": .6}
+        on_release:
+            root.ids.text_bar.text += "/100"
+            root.ids.text_bar.hint_text = root.ids.text_bar.text
+            root.evaluate()
+    MDRaisedButton:
+        id: clearall
+        text: "CE"
+        pos_hint: {"center_x": .35, "center_y": .6}
+        on_release:
+            root.ids.text_bar.text = ""
+            root.ids.text_bar.hint_text = "Enter your problem."
+    MDRaisedButton:
+        id: clear
+        text: "C"
+        pos_hint: {"center_x": .6, "center_y": .6}
+        on_release:
+            root.ids.text_bar.text = ""
+    MDRaisedButton:
+        id: erase
+        text: "<-"
+        pos_hint: {"center_x": .85, "center_y": .6}
+        on_release:
+            root.erase()
+
+    
+    # Row 2
+    MDRaisedButton:
+        id: oneover
+        text: "1/x"
+        pos_hint: {"center_x": .1, "center_y": .5}
+        on_release:
+            root.ids.text_bar.hint_text = "1/" + root.ids.text_bar.text
+            root.evaluate()
+    MDRaisedButton:
+        id: squared
+        text: "x^2"
+        pos_hint: {"center_x": .35, "center_y": .5}
+        on_release:
+            root.ids.text_bar.hint_text = root.ids.text_bar.text + "**2"
+            root.evaluate()
+    MDRaisedButton:
+        id: squareroot
+        text: "x^0.5"
+        pos_hint: {"center_x": .6, "center_y": .5}
+        on_release:
+            root.ids.text_bar.hint_text = root.ids.text_bar.text + "**0.5"
+            root.evaluate()
+    MDRaisedButton:
+        id: divide
+        text: "/"
+        pos_hint: {"center_x": .85, "center_y": .5}
+        on_release:
+            root.ids.text_bar.text += "/"
+            root.ids.text_bar.hint_text = root.ids.text_bar.text
+
+
+    # Row 3
+    MDRaisedButton:
+        id: seven
+        text: "7"
+        pos_hint: {"center_x": .1, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text += "7"
+    MDRaisedButton:
+        id: eight
+        text: "8"
+        pos_hint: {"center_x": .35, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text += "8"
+    MDRaisedButton:
+        id: nine
+        text: "9"
+        pos_hint: {"center_x": .6, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text += "9"
+    MDRaisedButton:
+        id: multiply
+        text: "*"
+        pos_hint: {"center_x": .85, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text += "*"
+            root.ids.text_bar.hint_text = root.ids.text_bar.text
+
+    # Row 4
+    MDRaisedButton:
+        id: four
+        text: "4"
+        pos_hint: {"center_x": .1, "center_y": .3}
+        on_release:
+            root.ids.text_bar.text += "4"
+    MDRaisedButton:
+        id: five
+        text: "5"
+        pos_hint: {"center_x": .35, "center_y": .3}
+        on_release:
+            root.ids.text_bar.text += "5"
+    MDRaisedButton:
+        id: six
+        text: "6"
+        pos_hint: {"center_x": .6, "center_y": .3}
+        on_release:
+            root.ids.text_bar.text += "6"
+    MDRaisedButton:
+        id: minus
+        text: "-"
+        pos_hint: {"center_x": .85, "center_y": .3}
+        on_release:
+            root.ids.text_bar.text += "-"
+            root.ids.text_bar.hint_text = root.ids.text_bar.text
+
+
+    # Row 5
+    MDRaisedButton:
+        id: one
+        text: "1"
+        pos_hint: {"center_x": .1, "center_y": .2}
+        on_release:
+            root.ids.text_bar.text += "1"
+    MDRaisedButton:
+        id: two
+        text: "2"
+        pos_hint: {"center_x": .35, "center_y": .2}
+        on_release:
+            root.ids.text_bar.text += "2"
+    MDRaisedButton:
+        id: three
+        text: "3"
+        pos_hint: {"center_x": .6, "center_y": .2}
+        on_release:
+            root.ids.text_bar.text += "3"
+    MDRaisedButton:
+        id: plus
+        text: "+"
+        pos_hint: {"center_x": .85, "center_y": .2}
+        on_release:
+            root.ids.text_bar.text += "+"
+            root.ids.text_bar.hint_text = root.ids.text_bar.text
+
+
+    # Row 6
+    MDRaisedButton:
+        id: sign
+        text: "+/-"
+        pos_hint: {"center_x": .1, "center_y": .1}
+        on_release:
+            root.sign()
+    MDRaisedButton:
+        id: zero
+        text: "0"
+        pos_hint: {"center_x": .35, "center_y": .1}
+        on_release:
+            root.ids.text_bar.text += "0"
+    MDRaisedButton:
+        id: point
+        text: "."
+        pos_hint: {"center_x": .6, "center_y": .1}
+        on_release:
+            root.ids.text_bar.text += "."
+    MDRaisedButton:
+        id: equals
+        text: "="
+        pos_hint: {"center_x": .85, "center_y": .1}
+        on_release:
+            root.ids.text_bar.hint_text = root.ids.text_bar.text
+            root.evaluate()
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
+################################################################################################################################
+
+################################################################################################################################
+# Scientif screen
+<ScientificScreen>:
+    name: "scientific"
+
+    # Application top bar
+    MDTopAppBar:
+        id: topbar
+        title: "Scientific"
+        left_action_items: [["menu", lambda x: app.menu.open()]]
+        right_action_items: [["theme-light-dark", lambda x: app.change_theme()]]
+        pos_hint: {"center_y": 0.95}
+
+    # The Text field for inputting values to calculate
+    MDTextField:
+        id: text_bar
+        hint_text: "Enter your problem"
+        helper_text: "Feel free!"
+        pos_hint: {"center_y": 0.85}
+        mode: "fill"
+    
+
+    # Row 1
+    MDRaisedButton:
+        id: diff
+        text: "dy/dx"
+        pos_hint: {"center_x": 0.1, "center_y": 0.7}
+        on_release:
+            root.differentiate()
+    MDRaisedButton:
+        id: pi
+        text: "pi"
+        pos_hint: {"center_x": 0.3, "center_y": 0.7}
+        on_release:
+            root.ids.text_bar.text += "3.14159265358979"
+    MDRaisedButton:
+        id: const_e
+        text: "e"
+        pos_hint: {"center_x": 0.5, "center_y": 0.7}
+        on_release:
+            root.ids.text_bar.text += "2.718"
+    MDRaisedButton:
+        id: clearall
+        text: "CE"
+        pos_hint: {"center_x": .7, "center_y": .7}
+        on_release:
+            root.ids.text_bar.text = ""
+            root.ids.text_bar.hint_text = "Enter your problem."
+    MDRaisedButton:
+        id: erase
+        text: "<-"
+        pos_hint: {"center_x": .9, "center_y": .7}
+        on_release:
+            root.erase()
+
+
+    # Row 2
+    MDRaisedButton:
+        id: intgr
+        text: "| ydx"
+        pos_hint: {"center_x": 0.1, "center_y": 0.6}
+        on_release:
+            root.Integrate()
+    MDRaisedButton:
+        id: oneover
+        text: "1/x"
+        pos_hint: {"center_x": .3, "center_y": .6}
+        on_release:
+            root.ids.text_bar.hint_text = "1/" + root.ids.text_bar.text
+            StandardScreen().evaluate()
+    MDRaisedButton:
+        id: x
+        text: "x"
+        pos_hint: {"center_x": 0.5, "center_y": 0.6}
+        on_release:
+            root.ids.text_bar.text += "x"
+    MDRaisedButton:
+        id: exp
+        text: "exp"
+        pos_hint: {"center_x": .7, "center_y": .6}
+        on_release:
+            root.exp()
+    MDRaisedButton:
+        id: mod
+        text: "mod"
+        pos_hint: {"center_x": .9, "center_y": .6}
+        on_release:
+            root.mod()
+
+
+    # Row 3
+    MDRaisedButton:
+        id: trig
+        text: "trig"
+        pos_hint: {"center_x": 0.1, "center_y": 0.5}
+        on_release:
+            root.menu.open()
+    MDRaisedButton:
+        id: left_brac
+        text: "("
+        pos_hint: {"center_x": .3, "center_y": .5}
+        on_release:
+            root.ids.text_bar.text += "("
+    MDRaisedButton:
+        id: right_brac
+        text: ")"
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        on_release:
+            root.ids.text_bar.text += ")"
+    MDRaisedButton:
+        id: fact
+        text: "n!"
+        pos_hint: {"center_x": .7, "center_y": .5}
+        on_release:
+            root.nfactorial()
+    MDRaisedButton:
+        id: divide
+        text: "/"
+        pos_hint: {"center_x": .9, "center_y": .5}
+        on_release:
+            root.ids.text_bar.text += "/"
+            root.ids.text_bar.hint_text = root.ids.text_bar.text
+
+
+    # Row 4
+    MDRaisedButton:
+        id: power
+        text: "x^y"
+        pos_hint: {"center_x": 0.1, "center_y": 0.4}
+        on_release:
+            root.ids.text_bar.text += "**"
+    MDRaisedButton:
+        id: seven
+        text: "7"
+        pos_hint: {"center_x": .3, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text += "7"
+    MDRaisedButton:
+        id: eight
+        text: "8"
+        pos_hint: {"center_x": .5, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text += "8"
+    MDRaisedButton:
+        id: nine
+        text: "9"
+        pos_hint: {"center_x": .7, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text += "9"
+    MDRaisedButton:
+        id: multiply
+        text: "*"
+        pos_hint: {"center_x": .9, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text += "*"
+            root.ids.text_bar.hint_text = root.ids.text_bar.text
+
+
+    # Row 5
+    MDRaisedButton:
+        id: tenexp
+        text: "10^x"
+        pos_hint: {"center_x": .1, "center_y": .3}
+        on_release:
+            root.ids.text_bar.hint_text = "10**" + root.ids.text_bar.text
+            root.evaluate()
+    MDRaisedButton:
+        id: four
+        text: "4"
+        pos_hint: {"center_x": .3, "center_y": .3}
+        on_release:
+            root.ids.text_bar.text += "4"
+    MDRaisedButton:
+        id: five
+        text: "5"
+        pos_hint: {"center_x": .5, "center_y": .3}
+        on_release:
+            root.ids.text_bar.text += "5"
+    MDRaisedButton:
+        id: six
+        text: "6"
+        pos_hint: {"center_x": .7, "center_y": .3}
+        on_release:
+            root.ids.text_bar.text += "6"
+    MDRaisedButton:
+        id: minus
+        text: "-"
+        pos_hint: {"center_x": .9, "center_y": .3}
+        on_release:
+            root.ids.text_bar.text += "-"
+            root.ids.text_bar.hint_text = root.ids.text_bar.text
+
+
+    # Row 6
+    MDRaisedButton:
+        id: log
+        text: "log"
+        pos_hint: {"center_x": .1, "center_y": .2}
+        on_release:
+            root.trig_function("log")
+    MDRaisedButton:
+        id: one
+        text: "1"
+        pos_hint: {"center_x": .3, "center_y": .2}
+        on_release:
+            root.ids.text_bar.text += "1"
+    MDRaisedButton:
+        id: two
+        text: "2"
+        pos_hint: {"center_x": .5, "center_y": .2}
+        on_release:
+            root.ids.text_bar.text += "2"
+    MDRaisedButton:
+        id: three
+        text: "3"
+        pos_hint: {"center_x": .7, "center_y": .2}
+        on_release:
+            root.ids.text_bar.text += "3"
+    MDRaisedButton:
+        id: plus
+        text: "+"
+        pos_hint: {"center_x": .9, "center_y": .2}
+        on_release:
+            root.ids.text_bar.text += "+"
+            root.ids.text_bar.hint_text = root.ids.text_bar.text
+
+
+    # Row 6
+    MDRaisedButton:
+        id: ln
+        text: "ln"
+        pos_hint: {"center_x": .1, "center_y": .1}
+        on_release:
+            root.trig_function("ln")
+    MDRaisedButton:
+        id: sign
+        text: "+/-"
+        pos_hint: {"center_x": .3, "center_y": .1}
+        on_release:
+            root.sign()
+    MDRaisedButton:
+        id: zero
+        text: "0"
+        pos_hint: {"center_x": .5, "center_y": .1}
+        on_release:
+            root.ids.text_bar.text += "0"
+    MDRaisedButton:
+        id: point
+        text: "."
+        pos_hint: {"center_x": .7, "center_y": .1}
+        on_release:
+            root.ids.text_bar.text += "."
+    MDRaisedButton:
+        id: equals
+        text: "="
+        pos_hint: {"center_x": .9, "center_y": .1}
+        on_release:
+            root.ids.text_bar.hint_text = root.ids.text_bar.text
+            root.evaluate()
+
+
+
+
+
+
+
+
+
+#######################################################################################################################################
+
+###########################################################################################################################################
+# Currency converter screen
+<CurrencyScreen>:
+    name: "currency"
+
+    MDTopAppBar:
+        id: topbar
+        title: "Currency"
+        left_action_items: [["menu", lambda x: app.menu.open()]]
+        right_action_items: [["theme-light-dark", lambda x: app.change_theme()]]
+        pos_hint: {"center_y": 0.95}
+
+    # The Text field for inputting values to calculate
+    MDTextField:
+        id: text_bar
+        hint_text: "Enter your problem"
+        helper_text: "Feel free!"
+        pos_hint: {"center_y": 0.85}
+        mode: "fill"
+    MDTextField:
+        id: result_bar
+        hint_text: "This is the resulting amount"
+        helper_text: "Feel free!"
+        pos_hint: {"center_y": 0.75}
+        mode: "fill"
+
+    
+    # First currency input
+    MDRaisedButton:
+        id: fcurr
+        text: "Currency 1"
+        pos_hint: {"center_x": .2, "center_y": .6}
+        on_release:
+            root.menu1.open()
+    MyLabel:
+        id: first_curr
+        text: "First Currency"
+        pos_hint: {"center_x": .9, "center_y": .6}
+
+
+    # Second currency input
+    MDRaisedButton:
+        id: scurr
+        text: "Currency 2"
+        pos_hint: {"center_x": .2, "center_y": .5}
+        on_release:
+            root.menu2.open()
+    MyLabel:
+        id: second_curr
+        text: "Second Currency"
+        pos_hint: {"center_x": .9, "center_y": .5}
+
+
+
+    # Row 1
+    MDRaisedButton:
+        id: seven
+        text: "7"
+        pos_hint: {"center_x": .2, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text += "7"
+    MDRaisedButton:
+        id: eight
+        text: "8"
+        pos_hint: {"center_x": .4, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text += "8"
+    MDRaisedButton:
+        id: nine
+        text: "9"
+        pos_hint: {"center_x": .6, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text += "9"
+    MDRaisedButton:
+        id: clearall
+        text: "CE"
+        pos_hint: {"center_x": .8, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text = ""
+            root.ids.result_bar.text = ""
+
+
+    MDRaisedButton:
+        id: four
+        text: "4"
+        pos_hint: {"center_x": .2, "center_y": .3}
+        on_release:
+            root.ids.text_bar.text += "4"
+    MDRaisedButton:
+        id: five
+        text: "5"
+        pos_hint: {"center_x": .4, "center_y": .3}
+        on_release:
+            root.ids.text_bar.text += "5"
+    MDRaisedButton:
+        id: six
+        text: "6"
+        pos_hint: {"center_x": .6, "center_y": .3}
+        on_release:
+            root.ids.text_bar.text += "6"
+    MDRaisedButton:
+        id: erase
+        text: "<-"
+        pos_hint: {"center_x": .8, "center_y": .3}
+        on_release:
+            root.erase()
+
+
+    MDRaisedButton:
+        id: one
+        text: "1"
+        pos_hint: {"center_x": .2, "center_y": .2}
+        on_release:
+            root.ids.text_bar.text += "1"
+    MDRaisedButton:
+        id: two
+        text: "2"
+        pos_hint: {"center_x": .4, "center_y": .2}
+        on_release:
+            root.ids.text_bar.text += "2"
+    MDRaisedButton:
+        id: three
+        text: "3"
+        pos_hint: {"center_x": .6, "center_y": .2}
+        on_release:
+            root.ids.text_bar.text += "3"
+    MDRaisedButton:
+        id: convert
+        text: "Convert"
+        pos_hint: {"center_x": .8, "center_y": .2}
+        on_release:
+            root.convert_curr()
+
+
+    MDRaisedButton:
+        id: zero
+        text: "0"
+        pos_hint: {"center_x": .4, "center_y": .1}
+        on_release:
+            root.ids.text_bar.text += "0"
+    MDRaisedButton:
+        id: point
+        text: "."
+        pos_hint: {"center_x": .6, "center_y": .1}
+        on_release:
+            root.ids.text_bar.text += "."
+
+
+###########################################################################################################################################
+
+#################################################################################################################################################
+# Volume converter screen
+<VolumeScreen>:
+    name: "volume"
+
+    MDTopAppBar:
+        id: topbar
+        title: "Volume"
+        left_action_items: [["menu", lambda x: app.menu.open()]]
+        right_action_items: [["theme-light-dark", lambda x: app.change_theme()]]
+        pos_hint: {"center_y": 0.95}
+
+    # The Text field for inputting values to calculate
+    MDTextField:
+        id: text_bar
+        hint_text: "Enter your problem"
+        helper_text: "Feel free!"
+        pos_hint: {"center_y": 0.85}
+        mode: "fill"
+    MDTextField:
+        id: result_bar
+        hint_text: "This is the resulting amount"
+        helper_text: "Feel free!"
+        pos_hint: {"center_y": 0.75}
+        mode: "fill"
+
+    
+    # First currency input
+    MDRaisedButton:
+        id: fvol
+        text: "Volume 1"
+        pos_hint: {"center_x": .2, "center_y": .6}
+        on_release:
+            root.menu.open()
+    MyLabel:
+        id: first_vol
+        text: "Volume 1"
+        pos_hint: {"center_x": .9, "center_y": .6}
+
+
+    # Second currency input
+    MDRaisedButton:
+        id: svol
+        text: "Volume 2"
+        pos_hint: {"center_x": .2, "center_y": .5}
+        on_release:
+            root.menu2.open()
+    MyLabel:
+        id: second_vol
+        text: "Volume 2"
+        pos_hint: {"center_x": .9, "center_y": .5}
+
+
+
+    # Row 1
+    MDRaisedButton:
+        id: seven
+        text: "7"
+        pos_hint: {"center_x": .2, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text += "7"
+    MDRaisedButton:
+        id: eight
+        text: "8"
+        pos_hint: {"center_x": .4, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text += "8"
+    MDRaisedButton:
+        id: nine
+        text: "9"
+        pos_hint: {"center_x": .6, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text += "9"
+    MDRaisedButton:
+        id: clearall
+        text: "CE"
+        pos_hint: {"center_x": .8, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text = ""
+            root.ids.result_bar.text = ""
+
+
+    MDRaisedButton:
+        id: four
+        text: "4"
+        pos_hint: {"center_x": .2, "center_y": .3}
+        on_release:
+            root.ids.text_bar.text += "4"
+    MDRaisedButton:
+        id: five
+        text: "5"
+        pos_hint: {"center_x": .4, "center_y": .3}
+        on_release:
+            root.ids.text_bar.text += "5"
+    MDRaisedButton:
+        id: six
+        text: "6"
+        pos_hint: {"center_x": .6, "center_y": .3}
+        on_release:
+            root.ids.text_bar.text += "6"
+    MDRaisedButton:
+        id: erase
+        text: "<-"
+        pos_hint: {"center_x": .8, "center_y": .3}
+        on_release:
+            root.erase()
+
+
+    MDRaisedButton:
+        id: one
+        text: "1"
+        pos_hint: {"center_x": .2, "center_y": .2}
+        on_release:
+            root.ids.text_bar.text += "1"
+    MDRaisedButton:
+        id: two
+        text: "2"
+        pos_hint: {"center_x": .4, "center_y": .2}
+        on_release:
+            root.ids.text_bar.text += "2"
+    MDRaisedButton:
+        id: three
+        text: "3"
+        pos_hint: {"center_x": .6, "center_y": .2}
+        on_release:
+            root.ids.text_bar.text += "3"
+    MDRaisedButton:
+        id: convert
+        text: "Convert"
+        pos_hint: {"center_x": .8, "center_y": .2}
+        on_release:
+            root.volume_convert()
+
+
+    MDRaisedButton:
+        id: zero
+        text: "0"
+        pos_hint: {"center_x": .4, "center_y": .1}
+        on_release:
+            root.ids.text_bar.text += "0"
+    MDRaisedButton:
+        id: point
+        text: "."
+        pos_hint: {"center_x": .6, "center_y": .1}
+        on_release:
+            root.ids.text_bar.text += "."
+
+
+
+#################################################################################################################################################
+
+########################################################################################################################################################
+# Length converter screen
+<LengthScreen>:
+    name: "length"
+
+    MDTopAppBar:
+        id: topbar
+        title: "Length"
+        left_action_items: [["menu", lambda x: app.menu.open()]]
+        right_action_items: [["theme-light-dark", lambda x: app.change_theme()]]
+        pos_hint: {"center_y": 0.95}
+
+    # The Text field for inputting values to calculate
+    MDTextField:
+        id: text_bar
+        hint_text: "Enter your problem"
+        helper_text: "Feel free!"
+        pos_hint: {"center_y": 0.85}
+        mode: "fill"
+    MDTextField:
+        id: result_bar
+        hint_text: "This is the resulting amount"
+        helper_text: "Feel free!"
+        pos_hint: {"center_y": 0.75}
+        mode: "fill"
+
+    
+    # First currency input
+    MDRaisedButton:
+        id: fleng
+        text: "Length 1"
+        pos_hint: {"center_x": .2, "center_y": .6}
+        on_release:
+            root.menu.open()
+    MyLabel:
+        id: first_leng
+        text: "Length 1"
+        pos_hint: {"center_x": .9, "center_y": .6}
+
+
+    # Second currency input
+    MDRaisedButton:
+        id: sleng
+        text: "Length 2"
+        pos_hint: {"center_x": .2, "center_y": .5}
+        on_release:
+            root.menu2.open()
+    MyLabel:
+        id: second_leng
+        text: "Length 2"
+        pos_hint: {"center_x": .9, "center_y": .5}
+
+
+
+    # Row 1
+    MDRaisedButton:
+        id: seven
+        text: "7"
+        pos_hint: {"center_x": .2, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text += "7"
+    MDRaisedButton:
+        id: eight
+        text: "8"
+        pos_hint: {"center_x": .4, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text += "8"
+    MDRaisedButton:
+        id: nine
+        text: "9"
+        pos_hint: {"center_x": .6, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text += "9"
+    MDRaisedButton:
+        id: clearall
+        text: "CE"
+        pos_hint: {"center_x": .8, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text = ""
+            root.ids.result_bar.text = ""
+
+
+    MDRaisedButton:
+        id: four
+        text: "4"
+        pos_hint: {"center_x": .2, "center_y": .3}
+        on_release:
+            root.ids.text_bar.text += "4"
+    MDRaisedButton:
+        id: five
+        text: "5"
+        pos_hint: {"center_x": .4, "center_y": .3}
+        on_release:
+            root.ids.text_bar.text += "5"
+    MDRaisedButton:
+        id: six
+        text: "6"
+        pos_hint: {"center_x": .6, "center_y": .3}
+        on_release:
+            root.ids.text_bar.text += "6"
+    MDRaisedButton:
+        id: erase
+        text: "<-"
+        pos_hint: {"center_x": .8, "center_y": .3}
+        on_release:
+            root.erase()
+
+
+    MDRaisedButton:
+        id: one
+        text: "1"
+        pos_hint: {"center_x": .2, "center_y": .2}
+        on_release:
+            root.ids.text_bar.text += "1"
+    MDRaisedButton:
+        id: two
+        text: "2"
+        pos_hint: {"center_x": .4, "center_y": .2}
+        on_release:
+            root.ids.text_bar.text += "2"
+    MDRaisedButton:
+        id: three
+        text: "3"
+        pos_hint: {"center_x": .6, "center_y": .2}
+        on_release:
+            root.ids.text_bar.text += "3"
+    MDRaisedButton:
+        id: convert
+        text: "Convert"
+        pos_hint: {"center_x": .8, "center_y": .2}
+        on_release:
+            root.length_convert()
+
+
+    MDRaisedButton:
+        id: zero
+        text: "0"
+        pos_hint: {"center_x": .4, "center_y": .1}
+        on_release:
+            root.ids.text_bar.text += "0"
+    MDRaisedButton:
+        id: point
+        text: "."
+        pos_hint: {"center_x": .6, "center_y": .1}
+        on_release:
+            root.ids.text_bar.text += "."
+
+
+
+
+
+#########################################################################################################################
+
+######################################################################################################################################################
+# Mass converter screen
+<Weight_MassScreen>:
+    name: "weight"
+
+    MDTopAppBar:
+        id: topbar
+        title: "Weight & Mass"
+        left_action_items: [["menu", lambda x: app.menu.open()]]
+        right_action_items: [["theme-light-dark", lambda x: app.change_theme()]]
+        pos_hint: {"center_y": 0.95}
+
+    # The Text field for inputting values to calculate
+    MDTextField:
+        id: text_bar
+        hint_text: "Enter your problem"
+        helper_text: "Feel free!"
+        pos_hint: {"center_y": 0.85}
+        mode: "fill"
+    MDTextField:
+        id: result_bar
+        hint_text: "This is the resulting amount"
+        helper_text: "Feel free!"
+        pos_hint: {"center_y": 0.75}
+        mode: "fill"
+
+    
+    # First currency input
+    MDRaisedButton:
+        id: fmass
+        text: "Mass 1"
+        pos_hint: {"center_x": .2, "center_y": .6}
+        on_release:
+            root.menu.open()
+    MyLabel:
+        id: first_mass
+        text: "Mass 1"
+        pos_hint: {"center_x": .9, "center_y": .6}
+
+
+    # Second currency input
+    MDRaisedButton:
+        id: smass
+        text: "Mass 2"
+        pos_hint: {"center_x": .2, "center_y": .5}
+        on_release:
+            root.menu2.open()
+    MyLabel:
+        id: second_mass
+        text: "Mass 2"
+        pos_hint: {"center_x": .9, "center_y": .5}
+
+
+
+    # Row 1
+    MDRaisedButton:
+        id: seven
+        text: "7"
+        pos_hint: {"center_x": .2, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text += "7"
+    MDRaisedButton:
+        id: eight
+        text: "8"
+        pos_hint: {"center_x": .4, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text += "8"
+    MDRaisedButton:
+        id: nine
+        text: "9"
+        pos_hint: {"center_x": .6, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text += "9"
+    MDRaisedButton:
+        id: clearall
+        text: "CE"
+        pos_hint: {"center_x": .8, "center_y": .4}
+        on_release:
+            root.ids.text_bar.text = ""
+            root.ids.result_bar.text = ""
+
+
+    MDRaisedButton:
+        id: four
+        text: "4"
+        pos_hint: {"center_x": .2, "center_y": .3}
+        on_release:
+            root.ids.text_bar.text += "4"
+    MDRaisedButton:
+        id: five
+        text: "5"
+        pos_hint: {"center_x": .4, "center_y": .3}
+        on_release:
+            root.ids.text_bar.text += "5"
+    MDRaisedButton:
+        id: six
+        text: "6"
+        pos_hint: {"center_x": .6, "center_y": .3}
+        on_release:
+            root.ids.text_bar.text += "6"
+    MDRaisedButton:
+        id: erase
+        text: "<-"
+        pos_hint: {"center_x": .8, "center_y": .3}
+        on_release:
+            root.erase()
+
+
+    MDRaisedButton:
+        id: one
+        text: "1"
+        pos_hint: {"center_x": .2, "center_y": .2}
+        on_release:
+            root.ids.text_bar.text += "1"
+    MDRaisedButton:
+        id: two
+        text: "2"
+        pos_hint: {"center_x": .4, "center_y": .2}
+        on_release:
+            root.ids.text_bar.text += "2"
+    MDRaisedButton:
+        id: three
+        text: "3"
+        pos_hint: {"center_x": .6, "center_y": .2}
+        on_release:
+            root.ids.text_bar.text += "3"
+    MDRaisedButton:
+        id: convert
+        text: "Convert"
+        pos_hint: {"center_x": .8, "center_y": .2}
+        on_release:
+            root.weight_convert()
+
+
+    MDRaisedButton:
+        id: zero
+        text: "0"
+        pos_hint: {"center_x": .4, "center_y": .1}
+        on_release:
+            root.ids.text_bar.text += "0"
+    MDRaisedButton:
+        id: point
+        text: "."
+        pos_hint: {"center_x": .6, "center_y": .1}
+        on_release:
+            root.ids.text_bar.text += "."
+
+
+############################################################################################################################################
+
+
+#############################################################################################################################################
+# Screen manager
+<SwitchScreen>:
+    id: screen_manager
+
+    StandardScreen:
+        name: "standard"
+    ScientificScreen:
+        name: "scientific"
+    CurrencyScreen:
+        name: "currency"
+    VolumeScreen:
+        name: "volume"
+    LengthScreen:
+        name: "length"
+    Weight_MassScreen:
+        name: "weight"
+
+##################################################################################################################################################
+
+# Custom label for in-app labels
+<MyLabel>:
+    id: general_label
+    text_color: 0,0,0,1
+    
